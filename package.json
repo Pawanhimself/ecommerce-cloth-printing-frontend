@@ -3,6 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "contributors": [{
+    "name": "David Franklin D.",
+    "email": "davidfranklin1999@gmail.com"
+  },
+  {
+    "name": "Mohammed Aneez",
+    "email": "mohammedaneez37@gmail.com"
+  }],
+  "description": "Dynamic Web App for Clothes Printing Business",
+
   "scripts": {
     "dev": "vite",
     "build": "vite build",
