@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+<<<<<<< HEAD
+=======
+
+@theme {
+    --color-primary: #4F46E5 ; /* Indigo */
+    --color-secondary:#10B981 ; /* Emerald */
+    --color-accent:#F59E0B ; /* Amber */
+}
+>>>>>>> 17aa48d64c46c7bc063163165c5f664ab2287970

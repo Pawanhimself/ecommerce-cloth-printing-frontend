@@ -3,6 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+<<<<<<< HEAD
+=======
+  "contributors": [{
+    "name": "David Franklin D.",
+    "email": "davidfranklin1999@gmail.com"
+  },
+  {
+    "name": "Mohammed Aneez",
+    "email": "mohammedaneez37@gmail.com"
+  }],
+  "description": "Dynamic Web App for Clothes Printing Business",
+
+>>>>>>> 17aa48d64c46c7bc063163165c5f664ab2287970
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,7 +24,12 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
+<<<<<<< HEAD
+   
     "axios": "^1.10.0",
+=======
+    "axios": "^1.10.0",
+>>>>>>> 17aa48d64c46c7bc063163165c5f664ab2287970
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
