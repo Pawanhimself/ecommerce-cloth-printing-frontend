@@ -25,9 +25,8 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
 <<<<<<< HEAD
-    "autoprefixer": "^10.4.21",
+   
     "axios": "^1.10.0",
-    "postcss": "^8.5.6",
 =======
     "axios": "^1.10.0",
 >>>>>>> 17aa48d64c46c7bc063163165c5f664ab2287970
