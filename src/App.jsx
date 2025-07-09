@@ -19,11 +19,11 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup/>} />
-        <Route path='/product' element={<Product/>} />
 
-        {/* Routes with layout (NavBar + Footer) */}
+        {/* customers route will be here. Routes with layout (NavBar + Footer) */}
         <Route element={<Mainlayout />}>
           <Route path='/home' element={<HomePage/>} />
+          <Route path='/products' element={<Product/>} />
         </Route>
 
 
