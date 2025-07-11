@@ -1,37 +1,28 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext';
 import products from '../../data/products';
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState('Men');
-  const [message, setMessage] = useState('');
-
-  const handleAddToCart = (product) => {
-    const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
-    existingCart.push(product);
-    localStorage.setItem('cart', JSON.stringify(existingCart));
-    setMessage(`${product.name} added to cart!`);
-    setTimeout(() => setMessage(''), 2000);
-  };
-
-  const handleBuyNow = () => {
-    alert('🛒 Proceeding to checkout...');
-  };
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-center text-primary mb-10">
+    <div className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      <h1 className="text-4xl font-extrabold text-center text-indigo-700 mb-10">
         T-Shirt Collection
       </h1>
 
-      <div className="flex justify-center gap-4 mb-12">
+      {/* Category Tabs */}
+      <div className="flex justify-center gap-3 flex-wrap mb-8">
         {Object.keys(products).map((category) => (
           <button
             key={category}
-            className={`px-6 py-2 rounded-full font-semibold transition duration-200 shadow-sm text-lg ${
+            className={`px-6 py-2 rounded-full border font-medium transition duration-200 text-sm md:text-base ${
               activeTab === category
-                ? 'bg-primary text-white'
-                : 'bg-white text-primary border border-primary'
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50'
             }`}
             onClick={() => setActiveTab(category)}
           >
@@ -40,46 +31,45 @@ const Product = () => {
         ))}
       </div>
 
-      {message && (
-        <div className="text-center text-green-600 font-medium mb-6">
-          {message}
-        </div>
-      )}
-
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {products[activeTab].map((product, index) => (
-          <div
+      {/* Product Grid */}
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {products[activeTab]?.map((product, index) => (
+          <Link
+            to={`/product/${activeTab.toLowerCase()}/${index}`}
             key={index}
-            className="bg-white hover:shadow-2xl transition border border-gray-200 rounded-xl overflow-hidden block"
+            className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition overflow-hidden"
           >
-            <Link to={`/product/${activeTab.toLowerCase()}/${index}`}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-60 object-cover"
-              />
-            </Link>
-            <div className="p-4">
-              <h3 className="text-lg font-bold text-primary mb-1 truncate">
-                {product.name}
-              </h3>
-              <p className="text-gray-600 font-medium mb-3">₹{product.price}</p>
-              <div className="flex flex-col gap-2">
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className="bg-accent text-white py-2 rounded text-sm font-semibold hover:bg-orange-500 transition"
-                >
-                  Add to Cart
-                </button>
-                <button
-                  onClick={handleBuyNow}
-                  className="bg-primary text-white py-2 rounded text-sm font-semibold hover:bg-indigo-700 transition"
-                >
-                  Buy Now
-                </button>
-              </div>
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-60 object-cover transition duration-300 group-hover:scale-105"
+            />
+            <div className="p-4 flex flex-col gap-2">
+              <h3 className="text-lg font-semibold text-indigo-700">{product.name}</h3>
+              <p className="text-gray-800 font-medium text-sm">₹{product.price}</p>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  addToCart({ ...product, size: 'M', quantity: 1 });
+                }}
+                className="mt-2 bg-orange-500 hover:bg-orange-600 text-white text-sm py-2 rounded transition"
+              >
+                Add to Cart
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  addToCart({ ...product, size: 'M', quantity: 1 });
+                  navigate('/cart');
+                }}
+                className="text-center text-white text-sm bg-indigo-600 hover:bg-indigo-700 py-2 rounded transition"
+              >
+                Buy Now
+              </button>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
