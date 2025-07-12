@@ -2,14 +2,32 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import products from '../../data/products';
+import { Heart } from 'lucide-react';
 
 const Product = () => {
   const [activeTab, setActiveTab] = useState('Men');
-  const { addToCart } = useCart();
+  const { addToCart, toggleWishlist, wishlist } = useCart();
   const navigate = useNavigate();
+  const [wishlistMessage, setWishlistMessage] = useState('');
+
+  const isWishlisted = (item) =>
+    wishlist.some((p) => p.id === item.id && p.name === item.name);
+
+  const handleToggleWishlist = (product) => {
+    const alreadyInWishlist = isWishlisted(product);
+    toggleWishlist(product);
+    setWishlistMessage(alreadyInWishlist ? 'Removed from Wishlist' : 'Added to Wishlist');
+    setTimeout(() => setWishlistMessage(''), 2000);
+  };
 
   return (
-    <div className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+    <div className="p-6 sm:p-10 bg-gray-50 min-h-screen relative">
+      {wishlistMessage && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-green-100 text-green-700 border border-green-300 px-4 py-2 rounded shadow">
+          {wishlistMessage}
+        </div>
+      )}
+
       <h1 className="text-4xl font-extrabold text-center text-indigo-700 mb-10">
         T-Shirt Collection
       </h1>
@@ -37,8 +55,23 @@ const Product = () => {
           <Link
             to={`/product/${activeTab.toLowerCase()}/${index}`}
             key={index}
-            className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition overflow-hidden"
+            className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition overflow-hidden relative"
           >
+            {/* Wishlist heart icon */}
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleToggleWishlist(product);
+              }}
+              className="absolute top-3 right-3 text-gray-400 hover:text-red-500 z-10"
+            >
+              <Heart
+                className={`w-5 h-5 transition ${
+                  isWishlisted(product) ? 'fill-red-500 text-red-500' : 'text-gray-400'
+                }`}
+              />
+            </button>
+
             <img
               src={product.image}
               alt={product.name}

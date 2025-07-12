@@ -11,8 +11,18 @@ const loadCart = () => {
   }
 };
 
+const loadWishlist = () => {
+  try {
+    const stored = localStorage.getItem('wishlist');
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+};
+
 const initialState = {
   cartItems: loadCart(),
+  wishlist: loadWishlist(),
   totalQuantity: 0,
   totalPrice: 0,
 };
@@ -84,6 +94,20 @@ const cartReducer = (state, action) => {
         totalPrice: 0,
       };
 
+    case 'TOGGLE_WISHLIST': {
+      const item = action.payload;
+      const exists = state.wishlist.some(
+        i => i.id === item.id && i.name === item.name
+      );
+      const updatedWishlist = exists
+        ? state.wishlist.filter(i => !(i.id === item.id && i.name === item.name))
+        : [...state.wishlist, item];
+      return {
+        ...state,
+        wishlist: updatedWishlist,
+      };
+    }
+
     default:
       return state;
   }
@@ -95,6 +119,10 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cartItems));
   }, [state.cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem('wishlist', JSON.stringify(state.wishlist));
+  }, [state.wishlist]);
 
   const addToCart = (item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });
@@ -112,16 +140,22 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'CLEAR_CART' });
   };
 
+  const toggleWishlist = (item) => {
+    dispatch({ type: 'TOGGLE_WISHLIST', payload: item });
+  };
+
   return (
     <CartContext.Provider
       value={{
         cartItems: state.cartItems,
+        wishlist: state.wishlist,
         totalQuantity: state.totalQuantity,
         totalPrice: state.totalPrice,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
+        toggleWishlist,
       }}
     >
       {children}
