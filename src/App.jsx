@@ -8,6 +8,7 @@ import { HomePage } from './pages/HomePage/HomePage.jsx';
 import Product from './pages/Product/Product.jsx'
 import ProductCard from './pages/Product/ProductCard.jsx';
 import Cart from './components/Cart/Cart.jsx';
+import Wishlist from './pages/Wishlist/Wishlist.jsx';
 
 
 //Admin pages
@@ -29,8 +30,12 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/product/:category/:index" element={<ProductCard />} />
           <Route path="/cart" element={<Cart />} />
-=======
+
+          <Route path="/wishlist" element={<Wishlist />} />
+
+
           <Route path='/products' element={<Product/>} />
+
         </Route>
 
 
