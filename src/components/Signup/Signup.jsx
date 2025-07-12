@@ -24,13 +24,14 @@ const Signup = () => {
         try {
           const url = "http://localhost:5000/api/users";
           const {data: res} = await axios.post(url,data);
-          navigate("/login");
+          navigate("/");
           console.log(res.message);
         } catch (error) {
           if( error.response &&
             error.response.status >= 400 &&
             error.response.status <= 500
           ){
+		console.log(error.response.data.message);
             setError(error.response.data.message)
           }
         }     
@@ -49,7 +50,7 @@ const Signup = () => {
         </div>
       
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" action="" onSubmit={handleSubmit}>
             <div className="flex gap-2">
                 <div>
                     <label htmlFor="firstName" className="block text-sm/6 font-medium text-gray-900">First Name</label>

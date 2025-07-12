@@ -1,4 +1,6 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+
+import Product from './pages/Product/Product.jsx'
 import Login from './components/Login/Login.jsx';
 import Signup from './components/Signup/Signup.jsx';
 import Mainlayout from './layouts/Mainlayout.jsx';
@@ -8,6 +10,13 @@ import ProductCard from './pages/Product/ProductCard.jsx';
 import Cart from './components/Cart/Cart.jsx';
 import Wishlist from './pages/Wishlist/Wishlist.jsx';
 
+
+//Admin pages
+import Admin from './layouts/Admin.jsx'
+import Dashboard from './pages/admin/Dashboard.jsx';
+import Products from './pages/admin/Products.jsx';
+import Orders from './pages/admin/Orders.jsx';
+
 function App() {
   return (
     <BrowserRouter>
@@ -15,15 +24,27 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup/>} />
 
-        {/* Routes with layout (NavBar + Footer) */}
+        {/* customers route will be here. Routes with layout (NavBar + Footer) */}
         <Route element={<Mainlayout />}>
           <Route path='/home' element={<HomePage/>} />
           <Route path="/product" element={<Product />} />
           <Route path="/product/:category/:index" element={<ProductCard />} />
           <Route path="/cart" element={<Cart />} />
+
           <Route path="/wishlist" element={<Wishlist />} />
+
+
+          <Route path='/products' element={<Product/>} />
+
         </Route>
 
+
+         {/* Admin routes */}
+        <Route path="/admin" element={<Admin />}>
+          <Route index element={<Dashboard />} /> 
+          <Route path="/admin/products" element={<Products/>} />
+          <Route path="/admin/orders" element={<Orders/>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
