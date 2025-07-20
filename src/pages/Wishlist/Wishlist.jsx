@@ -8,7 +8,7 @@ const Wishlist = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 md:px-10">
       <div className="max-w-full mx-auto">
-        <h1 className="text-4xl font-bold text-primary mb-10 text-center">My Wishlist</h1>
+        <h1 className="text-4xl font-bold text-text mb-10 text-center">My Wishlist</h1>
         
         {wishlist.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-gray-600 text-center py-20">
@@ -28,15 +28,27 @@ const Wishlist = () => {
                   className="w-full h-48 object-cover rounded-t-xl"
                 />
                 <div className="p-4 flex flex-col flex-1">
-                  <h2 className="text-lg font-bold text-primary mb-1 truncate">{item.name}</h2>
-                  <p className="text-gray-700 font-medium mb-4">₹{item.price}</p>
+                  <h2 className="text-lg font-bold text-text mb-1 truncate">{item.name}</h2>
+                  <p className="text-primary -700 font-medium mb-4">₹{item.price}</p>
 
                   <button
-                    onClick={() => addToCart({ ...item, size: 'M', quantity: 1 })}
-                    className="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-md transition mb-2"
+                    onClick={() => addToCart({
+                                      ...item,
+                                      size: item.size || 'M',
+                                      quantity: item.quantity || 1,
+                                    })
+                                    }
+                    className="flex items-center justify-center gap-2 bg-secondary -500 hover:bg-accent -600 text-white font-medium py-2 rounded-md transition mb-2"
                   >
                     <ShoppingCart className="w-4 h-4" />
                     Add to Cart
+                  </button>
+
+                  <button
+                    onClick={() => handleBuyNow(item)}
+                    className="bg-primary text-white py-2 rounded-md transition font-medium mb-2 hover:bg-accent -700 cursor-pointer"
+                  >
+                    Buy Now
                   </button>
 
                   <button
