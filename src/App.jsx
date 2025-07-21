@@ -24,7 +24,7 @@ function App() {
         {/* Routes with layout (NavBar + Footer) */}
         <Route element={<Mainlayout />}>
           <Route path='/home' element={<HomePage />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/products" element={<Product />} />
           <Route path="/product/:category/:index" element={<ProductCard />} />
           <Route path="/cart" element={<Cart />} />
 
