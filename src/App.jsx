@@ -10,6 +10,8 @@ import Wishlist from './pages/Wishlist/Wishlist.jsx';
 
 // Admin pages
 import Admin from './layouts/Admin.jsx';
+import AdminMiddleware from './middleware/AdminMiddleware.jsx';
+import AdminLogin from './pages/admin/AdminLogin.jsx';
 import Dashboard from './pages/admin/Dashboard.jsx';
 import Products from './pages/admin/Products.jsx';
 import Orders from './pages/admin/Orders.jsx';
@@ -18,28 +20,28 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/admin/login' element={<AdminLogin />} />
 
-        {/* Routes with layout (NavBar + Footer) */}
-        <Route element={<Mainlayout />}>
-          <Route path='/home' element={<HomePage />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/product/:category/:index" element={<ProductCard />} />
-          <Route path="/cart" element={<Cart />} />
-
-          <Route path="/wishlist" element={<Wishlist />} />
-
-        
-        </Route>
+          {/* Routes with layout (NavBar + Footer) */}
+          <Route element={<Mainlayout />}>
+            <Route path='/home' element={<HomePage />} />
+            <Route path="/products" element={<Product />} />
+            <Route path="/product/:category/:index" element={<ProductCard />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />  
+          </Route>
 
 
-        {/* Admin routes */}
-        <Route path="/admin" element={<Admin />}>
-          <Route index element={<Dashboard />} />
-          <Route path="products" element={<Products />} />
-          <Route path="orders" element={<Orders />} />
-        </Route>
+          {/* Admin routes */}
+          <Route element={<AdminMiddleware />} >
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<Dashboard />} />
+              <Route path="products" element={<Products />} />
+              <Route path="orders" element={<Orders />} />
+            </Route>
+          </Route>
       </Routes>
     </BrowserRouter>
   );
