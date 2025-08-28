@@ -1,7 +1,7 @@
 import Products from './pages/admin/Products.jsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './components/Login/Login.jsx';
-import Signup from './components/Signup/Signup.jsx';
+import Login from './pages/client/Login.jsx';
+import Signup from './pages/client/Signup.jsx';
 import Mainlayout from './layouts/Mainlayout.jsx';
 import { HomePage } from './pages/HomePage/HomePage.jsx';
 import Product from './pages/Product/Product.jsx';
@@ -16,23 +16,41 @@ import AdminLogin from './pages/admin/AdminLogin.jsx';
 import Dashboard from './pages/admin/Dashboard.jsx';
 import Orders from './pages/admin/Orders.jsx';
 import TshirtCustomize from './konvaCanvas/TshirtCustomize.jsx';
+import PageTransition from './layouts/PageTransition.jsx';
+import UserLayout from './layouts/UserLayout.jsx';
+import UserDashboard from './pages/client/UserDashboard.jsx';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route element={<PageTransition />} >
           <Route path='/' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/admin/login' element={<AdminLogin />} />
           <Route path='/canvas' element={<TshirtCustomize />}></Route>
+        </Route>
           {/* Routes with layout (NavBar + Footer) */}
           <Route element={<Mainlayout />}>
+
             <Route path='/home' element={<HomePage />} />
-            <Route path="/products" element={<Product />} />
-            <Route path="/product/:category/:index" element={<ProductCard />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />  
-          </Route>
+
+              <Route element={<PageTransition />} >
+                <Route path="/products" element={<Product />} />
+                <Route path="/product/:category/:index" element={<ProductCard />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/wishlist" element={<Wishlist />} />   
+
+                {/* Client-User Routes */}
+                <Route element={<UserLayout />}>
+                  <Route path="/account-settings" element={<UserDashboard/>} /> 
+                </Route>
+                
+              </Route>
+
+        </Route>
+
+        
 
 
           {/* Admin routes */}
